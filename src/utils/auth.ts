@@ -1,13 +1,13 @@
-// utils/auth.ts
 'use client';
 
 import { signInWithEmailAndPassword, signInWithPopup, signOut } from 'firebase/auth';
 import { auth, provider } from '@/firebase/config';
-import { useRouter } from 'next/router';
+import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 
-export const signInWithGoogle = async () => {
+export const signInWithGoogle = async (router: AppRouterInstance) => {
   try {
     await signInWithPopup(auth, provider);
+    router.push("/dashboard");
   } catch (error) {
     console.error('Google Sign-in Error:', error);
   }
@@ -21,10 +21,13 @@ export const logOut = async () => {
   }
 };
 
- export const handleEmailLogin = async () => {
-    const router = useRouter();
+export const handleEmailLogin = async (
+  email: string,
+  password: string,
+  router: AppRouterInstance
+) => {
   try {
-    const result = await signInWithEmailAndPassword(auth, email, "userPassword");
+    await signInWithEmailAndPassword(auth, email, password);
     router.push("/dashboard");
   } catch (error) {
     console.error("Email login error:", error);

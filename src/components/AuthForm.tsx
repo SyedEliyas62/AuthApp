@@ -61,12 +61,7 @@ export default function AuthForm() {
         fullWidth
         sx={{ textTransform: 'none' }}
       >
-        <img
-          src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
-          alt="Google"
-          width={20}
-          style={{ marginRight: 10 }}
-        />
+        
         Continue with Google
       </Button>
 

@@ -21,7 +21,7 @@ import { useRouter } from "next/navigation";
 
 export default function SignUpPage() {
   const [isMounted, setIsMounted] = useState(false);
-  const [name, setName] = useState("");            // <-- Added state for name
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
@@ -30,7 +30,7 @@ export default function SignUpPage() {
     setIsMounted(true);
   }, []);
 
-  if (!isMounted) return null; // Prevent hydration errors by rendering only on client
+  if (!isMounted) return null; // Prevent hydration errors
 
   const handleGoogleSignIn = async () => {
     try {
@@ -41,27 +41,23 @@ export default function SignUpPage() {
     }
   };
 
-  const handleEmailSignUp = async () => {
-    try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
+const handleEmailSignUp = async () => {
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
 
-      // Update the Firebase user profile with the name
-      if (auth.currentUser) {
-        await updateProfile(auth.currentUser, {
-          displayName: name,
-        });
-      }
-
-      router.push("/dashboard");
-    } catch (error) {
-      console.error("Email Sign-Up Error:", error);
-      alert("Sign up failed. Check console for details.");
+    if (auth.currentUser) {
+      await updateProfile(auth.currentUser, {
+        displayName: name,
+      });
     }
-  };
+
+    router.push("/dashboard");
+  } catch (error) {
+    console.error("Email Sign-Up Error:", error);
+    alert("Sign up failed. Please try again.");
+  }
+};
+
 
   return (
     <Container
@@ -93,7 +89,6 @@ export default function SignUpPage() {
           </Link>
         </Typography>
 
-        {/* Name input field */}
         <TextField
           fullWidth
           label="Full Name"

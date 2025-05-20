@@ -16,21 +16,21 @@ import { signInWithPopup, signInWithEmailAndPassword } from "firebase/auth";
 import { auth, provider } from "@/firebase/config";
 
 export default function LoginPage() {
-  const [isMounted, setIsMounted] = useState(false); // 💡 prevents hydration error
+  const [isMounted, setIsMounted] = useState(false); // prevents hydration error
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");  // added password state
+  const [password, setPassword] = useState("");
   const router = useRouter();
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
-  if (!isMounted) return null; // ✅ Ensures no hydration mismatch
+  if (!isMounted) return null;
 
   const handleGoogleSignIn = async () => {
     try {
       await signInWithPopup(auth, provider);
-      router.push("/dashboard"); // Redirect to dashboard on login
+      router.push("/dashboard");
     } catch (error) {
       console.error("Google Sign-In error:", error);
     }
@@ -67,8 +67,9 @@ export default function LoginPage() {
         <Typography variant="h5" fontWeight={600} color="black" mb={1}>
           Login
         </Typography>
+
         <Typography variant="body1" color="black" mb={3}>
-          Welcome back! Don't have an account?{" "}
+          Welcome back! Don&apos;t have an account?{" "}
           <Link href="/" underline="hover">
             Sign up here
           </Link>
@@ -132,7 +133,7 @@ export default function LoginPage() {
           textAlign="center"
           color="text.secondary"
         >
-          By logging in you agree to Realize's{" "}
+          By logging in you agree to Realize&apos;s{" "}
           <Link href="#" underline="hover">
             Privacy Policy
           </Link>{" "}
